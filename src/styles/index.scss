@@ -1,0 +1,17 @@
+// 导入 tailwind 的基础指令组件
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+// 为 scrollBar 指定弧度（1.3.1 通过属性指定弧度无效）
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+  }
+  // 解决引导图白色底会覆盖图标
+  .driver-fix-stacking {
+    position: relative;
+  }
+  .driver-navigation-btns {
+    line-height: 0;
+  }
+  
+   
