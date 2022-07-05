@@ -1,16 +1,10 @@
 import { createApp } from 'vue'
+import router from './router/index'
 import App from './App.vue'
-import router from './router'
-import store from './store'
-import './styles/index.scss'
-import { useRem } from './utils/flexible'
-import useTheme from './utils/theme'
-import mLibs from './libs'
-import mDirective from './directives'
+import { useREM } from '@/utils/flexible'
+import '@/styles/index.scss'
 import 'virtual:svg-icons-register'
-import './permission'
+import mLibs from '@/libs'
 
-useRem()
-useTheme()
-
-createApp(App).use(router).use(store).use(mLibs).use(mDirective).mount('#app')
+useREM()
+createApp(App).use(router).use(mLibs).mount('#app')
