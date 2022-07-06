@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white sticky top-0 z-10">
+  <div class="bg-white sticky top-0 z-10 dark:bg-zinc-900">
     <ul
       ref="ulTarget"
       class="relative flex overflow-x-auto p-1 text-xs text-zinc-600 overflow-hidden"
@@ -7,13 +7,13 @@
       <!-- 滑块 -->
       <li
         ref="sliderTarget"
-        class="absolute h-[22px] bg-zinc-900 rounded-lg duration-200"
+        class="dark:bg-zinc-800 absolute h-[22px] bg-zinc-900 rounded-lg duration-200"
         :style="sliderStyle"
       ></li>
       <!-- 汉堡按钮 -->
       <li
         @click="onShowPopup"
-        class="z-20 fixed right-[-1px] top-0 h-4 px-1 bg-white flex items-center shadow-l-white"
+        class="dark:bg-zinc-900 dark:shadow-l-zinc z-20 fixed right-[-1px] top-0 h-4 px-1 bg-white flex items-center shadow-l-white"
       >
         <m-svg-icon class="h-1.5 w-1.5" name="hamburger"></m-svg-icon>
       </li>
@@ -21,7 +21,7 @@
       <li
         :ref="setItemRef"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
-        v-for="(item, index) in date"
+        v-for="(item, index) in $store.getters.catgorys"
         :key="item.id"
         :class="{ 'text-zinc-200': currentCategoryIndex === index }"
         @click="itemClick(index)"
@@ -31,25 +31,15 @@
     </ul>
   </div>
   <m-popup v-model="isVisible">
-    <div>
-      <!-- <ul>
-        <li v-for="item in date" :key="item.id">{{ item.name }}</li>
-      </ul> -->
-      123
-    </div>
+    <menu-vue @onItemClick="onItemClick" />
   </m-popup>
 </template>
 
 <script setup>
 import { useScroll } from '@vueuse/core'
 import { onBeforeUpdate, ref, watch } from 'vue'
+import menuVue from '../../menu/index.vue'
 
-const props = defineProps({
-  date: {
-    type: Array,
-    required: true
-  }
-})
 // 数据更新之前要把数组滞空  否则会越加越多
 onBeforeUpdate(() => {
   itemRefs = []
@@ -91,6 +81,11 @@ const isVisible = ref(false)
 // 汉堡按钮事件
 const onShowPopup = () => {
   isVisible.value = true
+}
+// menu组件item点击到触发事件
+const onItemClick = (index) => {
+  currentCategoryIndex.value = index
+  isVisible.value = false
 }
 </script>
 <style lang="scss" scoped></style>
